@@ -5,26 +5,16 @@
 -- dbedu@cs.vsb.cz, 2023-2024
 -- last update: 2025-02-14
 
-begin
-    generate_customers();
-end;
+call generate_customers();
 
-begin
-    generate_products();
-end;
+call generate_products();
 
-begin
-    generate_stores();
-end;
+call generate_stores();
 
-begin
-    generate_staff();
-end;
+call generate_staff();
 
 create index staff_idStore_idx on Staff (idStore);
 
-begin
-    generate_orders();
-end;
+call generate_orders();
 
 drop index staff_idStore_idx;
