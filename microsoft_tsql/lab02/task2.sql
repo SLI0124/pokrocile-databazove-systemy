@@ -63,14 +63,14 @@ exec PrintPagesHeap 'Store';
 
 -- 2.2.1
 -- Order
--- first
+-- first, less detailed
 select i.name, s.index_depth - 1 as height, sum(s.page_count) as page_count
 from sys.dm_db_index_physical_stats(DB_ID(N'sli0124'), OBJECT_ID(N'Order'), NULL, NULL, 'DETAILED') s
          join sys.indexes i on s.object_id = i.object_id and s.index_id = i.index_id
 where name = 'PK__Order__C8AAF6FEB772B1E2'
 group by i.name, s.index_depth
 
--- second
+-- second, much more detailed
 select s.index_level                              as level,
        s.page_count,
        s.record_count,
@@ -80,3 +80,27 @@ select s.index_level                              as level,
 from sys.dm_db_index_physical_stats(DB_ID(N'sli0124'), OBJECT_ID(N'Order'), NULL, NULL, 'DETAILED') s
          join sys.indexes i on s.object_id = i.object_id and s.index_id = i.index_id
 where name = 'PK__Order__C8AAF6FEB772B1E2';
+
+-- 2.4.1
+-- order item
+select s.index_level                              as level,
+       s.page_count,
+       s.record_count,
+       s.avg_record_size_in_bytes                 as avg_record_size,
+       round(s.avg_page_space_used_in_percent, 1) as page_utilization,
+       round(s.avg_fragmentation_in_percent, 2)   as avg_frag
+from sys.dm_db_index_physical_stats(DB_ID(N'sli0124'), OBJECT_ID(N'OrderItem'), NULL, NULL, 'DETAILED') s
+         join sys.indexes i on s.object_id = i.object_id and s.index_id = i.index_id
+where name = 'PK__OrderIte__CD4431637FC271FD';
+
+alter index PK__OrderIte__CD4431637FC271FD on OrderItem rebuild;
+
+select s.index_level                              as level,
+       s.page_count,
+       s.record_count,
+       s.avg_record_size_in_bytes                 as avg_record_size,
+       round(s.avg_page_space_used_in_percent, 1) as page_utilization,
+       round(s.avg_fragmentation_in_percent, 2)   as avg_frag
+from sys.dm_db_index_physical_stats(DB_ID(N'sli0124'), OBJECT_ID(N'OrderItem'), NULL, NULL, 'DETAILED') s
+         join sys.indexes i on s.object_id = i.object_id and s.index_id = i.index_id
+where name = 'PK__OrderIte__CD4431637FC271FD';

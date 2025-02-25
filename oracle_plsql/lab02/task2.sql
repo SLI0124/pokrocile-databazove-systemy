@@ -109,7 +109,7 @@ call PRINTPAGES('STORE', 'SLI0124');
 call PRINTPAGES_SPACE_USAGE('CUSTOMER', 'SLI0124', 'TABLE');
 
 -- index_blocks_order_v2b
-call PRINTPAGES_SPACE_USAGE('ORDER', 'SLI0124', 'TABLE');
+call PRINTPAGES_SPACE_USAGE('Order', 'SLI0124', 'TABLE');
 
 -- index_blocks_orderitem_v2b
 call PRINTPAGES_SPACE_USAGE('ORDERITEM', 'SLI0124', 'TABLE');
@@ -132,4 +132,21 @@ select height-1 as h, blocks, lf_blks as leaf_pages, br_blks as inner_pages, lf_
 from index_stats where name='SYS_C0020808';
 
 -- 2.3.1.
-CREATE INDEX idx_customer_lName ON CUSTOMER (lName);
+CREATE INDEX IDX_CUSTOMER_LNAME ON CUSTOMER (lName);
+
+ANALYZE INDEX IDX_CUSTOMER_LNAME VALIDATE STRUCTURE;
+
+-- index_customer_lname
+select height-1 as h, blocks, lf_blks as leaf_pages, br_blks as inner_pages, lf_rows as leaf_items,
+       br_rows as inner_items, pct_used
+from index_stats where name='IDX_CUSTOMER_LNAME';
+
+ANALYZE INDEX SYS_C0020787 VALIDATE STRUCTURE;
+
+-- index_customer_primary_key
+select height-1 as h, blocks, lf_blks as leaf_pages, br_blks as inner_pages, lf_rows as leaf_items,
+       br_rows as inner_items, pct_used
+from index_stats where name='SYS_C0020787';
+
+-- heap_customer
+call PRINTPAGES('CUSTOMER', 'SLI0124');
