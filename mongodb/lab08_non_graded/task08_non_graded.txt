@@ -1,0 +1,317 @@
+9.1.1.
+mongodb://SLI0124:SLI0124SLI0124@dbsys.cs.vsb.cz:27017
+
+9.1.2.
+use SLI0124
+
+9.1.3.
+db.moviedb.find().count();
+0
+
+9.1.4.
+for %i in (moviedb2\*.json) do mongoimport.exe /db:SLI0124 /collection:moviedb /authenticationDatabase:admin /username:SLI0124 /password:SLI0124SLI0124 --legacy mongodb://dbsys.cs.vsb.cz:27017 --file "%~fi"
+
+9.1.5.
+db.moviedb.find().count();
+218
+
+9.2.
+9.2.1.
+{
+    "name": "Sociální síť",
+    "name_orig": "The Social Network",
+    "year": 2010,
+    "director": "David Fincher",
+    "actor": ["Jesse Eisenberg", "Justin Timberlake", "Andrew Garfield", "Brenda Song", "Rooney Mara", "Armie Hammer", "Max Minghella", "Josh Pence"],
+    "post": "sli0124",
+    "writer": "Aaron Sorkin",
+    "music": ["Trent Reznor", "Atticus Ross"],
+    "cinematography": "Jeff Cronenweth",
+    "production_country": "USA",
+    "content": "Každá doba má své vizionáře, ….",
+    "content_orig":"In 2003, Harvard undergrad …",
+    "rating": 81,
+    "genre": ["Drama", "Životopisný", "Historický"]
+}
+
+9.2.2.
+{
+    "name": "Taxikář",
+    "name_orig": "Taxi Driver",
+    "year": 1976,
+    "director": "Martin Scorsese",
+    "actor": ["Robert De Niro", "Jodie Foster", "Cybill Shepherd", "Harvey Keitel", "Peter Boyle", "Leonard Harris", "Albert Brooks"],
+    "post": "sli0124",
+    "writer": "Paul Schrader",
+    "music": "Bernard Herrmann",
+    "cinematography": "Michael Chapman",
+    "production_country": "USA",
+    "content": "S jizvami na duši, které …",
+    "content_orig":"A mentally unstable Vietnam War …",
+    "rating": 82,
+    "genre": ["Drama", "Krimi", "Psychologický", "Thriller", "Noir"]
+}
+
+9.3.1.
+Enterprise SLI0124> db.moviedb.find( {name: "Drive"} );
+[
+  {
+    _id: ObjectId('67fe431dd607128e89ecee81'),
+    name: 'Drive',
+    name_orig: 'Drive',
+    year: 2011,
+    director: [ 'Nicolas Winding Refn' ],
+    writer: [ 'Hossein Amini' ],
+    actor: [ 'Ryan Gosling', 'Carey Mullingan', 'Bryan Cranston' ],
+    post: 'pit0060'
+  }
+]
+
+9.3.2.
+Enterprise SLI0124> db.moviedb.find( { _id: ObjectId('67fe431dd607128e89ecee81') } );
+[
+  {
+    _id: ObjectId('67fe431dd607128e89ecee81'),
+    name: 'Drive',
+    name_orig: 'Drive',
+    year: 2011,
+    director: [ 'Nicolas Winding Refn' ],
+    writer: [ 'Hossein Amini' ],
+    actor: [ 'Ryan Gosling', 'Carey Mullingan', 'Bryan Cranston' ],
+    post: 'pit0060'
+  }
+]
+
+9.3.3.
+Enterprise SLI0124> db.moviedb.find( { post: "sli0124" } );
+[
+  {
+    _id: ObjectId('67fe43263d54ff4a0bf38a80'),
+    name: 'Sociální síť',
+    name_orig: 'The Social Network',
+    year: 2010,
+    director: 'David Fincher',
+    actor: [
+      'Jesse Eisenberg',
+      'Justin Timberlake',
+      'Andrew Garfield',
+      'Brenda Song',
+      'Rooney Mara',
+      'Armie Hammer',
+      'Max Minghella',
+      'Josh Pence'
+    ],
+    post: 'sli0124',
+    writer: 'Aaron Sorkin',
+    music: [ 'Trent Reznor', 'Atticus Ross' ],
+    cinematography: 'Jeff Cronenweth',
+    production_country: 'USA',
+    content: 'Každá doba má své vizionáře, kteří za sebou ve stopách své geniality zanechají pozměněný svět – ale málokdy k tomu dojde bez boje o to, co se přesně událo a kdo byl přítomen okamžiku zrození změn. Ve filmu Sociální síť divákům režisér David Fincher a scenárista Aaron Sorkin umožňují nahlédnout do okamžiků, kdy vznikal Facebook, nejrevolučnější sociální fenomén nového století, prostřednictvím odlišných pohledů hyperinteligentních mladých mužů, kteří svorně tvrdí, že právě oni byli u toho, když Facebook vznikl. Výsledkem je drama plné tvoření i destrukce, drama, které se zcela záměrně vyhýbá jediné interpretaci, ale místo toho poukazuje na rozpory v subjektivních výkladech událostí, aby tak zrcadlilo stále se měnící sociální vztahy, které jsou pro naši současnost charakteristické.',
+    content_orig: 'In 2003, Harvard undergrad and computer programmer Mark Zuckerberg begins work on a new concept that eventually turns into the global social network known as Facebook. Six years later, Mark is one of the youngest billionaires ever, but his unprecedented success leads to both personal and legal complications when he ends up on the receiving end of two lawsuits, one involving his former friend.',
+    rating: 81,
+    genre: [ 'Drama', 'Životopisný', 'Historický' ]
+  },
+  {
+    _id: ObjectId('67fe432635ca304a63cd3a73'),
+    name: 'Taxikář',
+    name_orig: 'Taxi Driver',
+    year: 1976,
+    director: 'Martin Scorsese',
+    actor: [
+      'Robert De Niro',
+      'Jodie Foster',
+      'Cybill Shepherd',
+      'Harvey Keitel',
+      'Peter Boyle',
+      'Leonard Harris',
+      'Albert Brooks'
+    ],
+    post: 'sli0124',
+    writer: 'Paul Schrader',
+    music: 'Bernard Herrmann',
+    cinematography: 'Michael Chapman',
+    production_country: 'USA',
+    content: 'S jizvami na duši, které si přivezl z Vietnamu, pracuje samotář Travis Bickle jako taxikář na nočním Manhattanu. Všude kolem se to hemží přátelstvím, jen Travisovi se nedaří s kýmkoliv sblížit. Během nekonečného popojíždění „špinavými“ ulicemi New Yorku naráží jen na násilí, drogy a prodejný sex. V dlouhodobě traumatizovaném, frustrovaném Travisovi sílí odhodlání k radikálnímu činu. To v osamělém muži nechtěně posílí jak elegantní Betsy, spolupracující na volební kampani senátora Palantinea, tak nezletilá prostitutka Iris. Travisův zadržovaný hněv a problém s loajalitou propukne v záchvat násilí a odplaty.',
+    content_orig: 'A mentally unstable Vietnam War veteran works as a night-time taxi driver in New York City where the perceived decadence and sleaze feed his urge for violent action.',
+    rating: 82,
+    genre: [ 'Drama', 'Krimi', 'Psychologický', 'Thriller', 'Noir' ]
+  }
+]
+
+9.3.4.
+Enterprise SLI0124> db.moviedb.find( {year: 2019}, {name: 1, _id: 0} );
+[
+  { name: 'Tolkien' },
+  { name: 'Avengers: Endgame' },
+  { name: 'Baby Driver' },
+  { name: 'Avengers: Endgame' },
+  { name: 'Maják' },
+  { name: 'Sedm' },
+  { name: 'Gentelmani' },
+  { name: 'Joker' },
+  { name: 'Parasite' },
+  { name: 'John Wick 3' }
+]
+
+9.3.5.
+Enterprise SLI0124> db.moviedb.find( {year: {$gte: 2000, $lte: 2010} }, {name: 1, _id: 0} );
+[
+  { name: 'Senna' },
+  { name: 'Star Wars: Epizoda II - Klony útočí' },
+  { name: 'Star Wars: Epizoda III - Pomsta Sithů' },
+  { name: 'Malý Herkules' },
+  { name: 'Supersmradi - Malí Géniové 2' },
+  { name: 'Waterloo po česku' },
+  { name: 'Cesta do fantazie' },
+  { name: 'Počátek' },
+  { name: 'Pan prstenu: Navrat krale' },
+  { name: 'Pan prstenu: Spolecenstvo Prstenu' },
+  { name: 'Hvězdná brána: Návrat' },
+  { name: 'Dopisy pro Julii' },
+  { name: 'Spider-Man 2' },
+  { name: 'Jehovova pomsta' },
+  { name: 'Tupíři' },
+  { name: 'Život není krásný' },
+  { name: 'Kill Bill' },
+  { name: 'Freddyho úlet' },
+  { name: 'Jmenuji se Sam' },
+  { name: 'Avatar' }
+]
+Type "it" for more
+Enterprise SLI0124> it
+[
+  { name: 'Oko bere' },
+  { name: 'Spider-Man' },
+  { name: 'Komici' },
+  { name: 'Spider-Man 2' },
+  { name: 'Hledá se nemo' },
+  {},
+  { name: 'Chyť mě, když to dokážeš' },
+  { name: 'Skrytá identita' },
+  { name: 'Zabijak Bean' },
+  { name: 'Transformers' },
+  { name: 'Transformers: Pomsta porazenych' },
+  { name: 'Chyť mě, když to dokážeš' },
+  { name: 'Jak vycvičit draka' },
+  {},
+  { name: 'Saw: Hra o přežití' },
+  { name: 'Shrek' },
+  { name: 'Pianista' },
+  { name: 'Sociální síť' },
+  { name: 'Rychle a zběsile' },
+  { name: 'Rychle a zběsile 2' }
+]
+Type "it" for more
+Enterprise SLI0124> it
+[
+  {},
+  { name: 'Kráľovstvo nebeské' },
+  {},
+  {},
+  {},
+  { name: 'Passport To Love' }
+]
+
+9.3.6.
+Enterprise SLI0124> db.moviedb.find( {year: {$in: [2010, 2020] } }, {name: 1, _id: 0} );
+[
+  { name: 'Senna' },
+  { name: 'Počátek' },
+  { name: 'Dopisy pro Julii' },
+  { name: 'Jehovova pomsta' },
+  { name: 'Tupíři' },
+  { name: 'Horná Dolná v karanténe' },
+  { name: 'Jak vycvičit draka' },
+  {},
+  { name: 'Sociální síť' },
+  {}
+]
+
+9.3.7.
+Enterprise SLI0124> db.moviedb.find( {director: "Martin Scorsese" }, {name: 1, _id: 0} );
+[
+  { name: 'Vlk z Wall Street' },
+  { name: 'Skrytá identita' },
+  { name: 'Taxikář' }
+]
+
+9.3.8.
+Enterprise SLI0124> db.moviedb.find( {actor: "Robert De Niro" }, {name: 1, _id: 0} );
+[ { name: 'Joker' }, { name: 'Taxikář' } ]
+
+9.3.9.
+Enterprise SLI0124> db.moviedb.find( {actor: { $all: ["Robert De Niro", "Jodie Foster"] } }, {name: 1, _id: 0} );
+[ { name: 'Taxikář' } ]
+
+9.3.10.
+Enterprise SLI0124> db.moviedb.find( {production_country: "CZE" }, {name: 1, _id: 0} );
+[
+  { name: 'Jehovova pomsta' },
+  { name: 'Život není krásný' },
+  { name: 'Pelíšky' },
+  { name: 'Ant-Man a Wasp: Quantumania' }
+]
+
+9.3.11.
+Enterprise SLI0124> db.moviedb.find( {music: "Hans Zimmer" }, {name: 1, _id: 0} );
+[
+  { name: 'Duna: Část druhá' },
+  { name: 'Duna' },
+  { name: 'Duna' },
+  { name: 'Duna: Část druhá' },
+  { name: 'Interstellar' },
+  { name: 'Dunkerk' },
+  { name: 'Suzume' },
+  { name: 'Skrytá čísla' },
+  {},
+  {}
+]
+
+9.3.12.
+Enterprise SLI0124> db.moviedb.find( {rating: {$gt: 90} }, {name: 1, _id: 0} );
+[ { name: 'Arcane' }, { name: 'Arcane' }, { name: 'Šógun' } ]
+
+9.3.13.
+Enterprise SLI0124> db.moviedb.find( {genre: "Sci-Fi" }, {name: 1, _id: 0} );
+[
+  { name: '1984' },
+  { name: 'Star Wars: Epizoda II - Klony útočí' },
+  { name: 'Star Wars: Epizoda IV - Nová naděje' },
+  { name: 'Star Wars: Epizoda I - Skrytá hrozba' },
+  { name: 'Star Wars: Epizoda VI - Návrat Jediho' },
+  { name: 'Star Wars: Epizoda III - Pomsta Sithů' },
+  { name: 'Star Wars: Epizoda V - Impérium vrací úder' },
+  { name: 'Avatar: The Way of Water' },
+  { name: 'Duna: Část druhá' },
+  { name: 'Meziplanetární' },
+  { name: 'Počátek' },
+  { name: 'Hvězdná brána' },
+  { name: 'Hvězdná brána: Návrat' },
+  { name: 'Arcane' },
+  { name: 'Duna' },
+  { name: 'Duna: Část druhá' },
+  { name: 'Free Guy: Hra na hrdinu' },
+  { name: 'Avengers: Endgame' },
+  { name: 'Arcane' },
+  { name: 'Hulk' }
+]
+Type "it" for more
+Enterprise SLI0124> it
+[
+  { name: 'Iron Man' },
+  { name: 'VALL-I' },
+  { name: 'Avengers: Endgame' },
+  { name: 'Interstellar' },
+  { name: 'Duna: Část druhá' },
+  { name: 'K zemi hleď!' },
+  { name: 'Duna' },
+  { name: 'Duna: Část druhá' },
+  { name: 'Wild Wild West' },
+  { name: 'Jursky svet' },
+  { name: 'Strazci Galaxie' },
+  { name: 'Strazci Galaxie Vol. 2' },
+  { name: 'Strazci Galaxie: Volume 3' },
+  { name: 'Doktor Strange' },
+  { name: 'Termin�tor 2: Den z��tov�n�' },
+  { name: 'Termin�tor' }
+]
