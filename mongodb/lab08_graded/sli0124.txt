@@ -1,0 +1,161 @@
+# 10.1., D1
+db.moviedb.find().count();
+290
+
+# 10.2., D1
+db.moviedb.distinct("name").length
+220
+
+# 10.2., D2
+db.moviedb.distinct("movie").length
+23
+
+# 10.2., D3
+db.moviedb.find({ $or: [ { name: { $exists: true } }, { movie: { $exists: true } } ] }, { name: 1, movie: 1 })
+  { _id: ObjectId('68076dff70ffc4fcfa1fa2fb'), movie: 'Lost update' },
+  { _id: ObjectId('68076dff2c944b92683d3ec1'), movie: 'Misery' },
+  { _id: ObjectId('68076e0043bb812de14354a7'), movie: 'Osviceni' },
+  { _id: ObjectId('68076e0053ce01b7c4923b44'), name: 'Jojo Rabbit' },
+  { _id: ObjectId('68076e003d6a914548ddc9a0'), name: 'Všechno, všude, najednou'},
+
+# 10.2., D4
+db.moviedb.countDocuments({ $or: [ { name: { $exists: true } }, { movie: { $exists: true } } ] })
+288
+
+# 10.2., A1
+db.moviedb.updateMany({ movie: { $exists: true } }, [{ $set: { name: "$movie" } }, { $unset: "movie" }])
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 23,
+  modifiedCount: 23,
+  upsertedCount: 0
+}
+
+# 10.2., D5
+db.moviedb.countDocuments({ name: { $exists: true } })
+288
+
+# 10.2., D6
+db.moviedb.distinct("name").length
+241
+
+# 10.2., Kolik je v databázi filmů s duplicitním názvem?
+db.moviedb.aggregate([{ $group: { _id: "$name", count: { $sum: 1 } } }, { $match: { count: { $gt: 1 } } }, { $count: "duplicates" }])
+[ { duplicates: 26 } ]
+
+# 10.3, D1 
+db.moviedb.aggregate([{ $group: { _id: "$name", count: { $sum: 1 } } }, { $match: { count: { $gt: 1 } } }])
+{ _id: 'Ztratili jsme Stalina', count: 3 },
+{ _id: 'Chyť mě, když to dokážeš', count: 2 },
+{ _id: 'Minecraft film', count: 4 },
+{ _id: 'Ledové ostří', count: 2 },
+{ _id: 'Interstellar', count: 2 },
+
+# 10.4., M1
+load("10_4.js")
+
+10_4.js
+const names = db.moviedb.aggregate([
+    { $group: { _id: "$name", count: { $sum: 1 } } },
+    { $match: { count: { $gt: 1 } } }
+  ]).toArray();
+  
+  names.forEach(({ _id: name }) => {
+    const docs = db.moviedb.find({ name }).toArray();
+    const largestDoc = docs.reduce((a, b) => 
+      JSON.stringify(a).length > JSON.stringify(b).length ? a : b
+    );
+    db.moviedb.deleteMany({ 
+      name, 
+      _id: { $ne: largestDoc._id } 
+    });
+  });
+
+# 10.4., D1
+db.moviedb.distinct("name").length
+241
+
+# 10.4., D2
+db.moviedb.countDocuments()
+242
+
+# 10.5., D1
+db.moviedb.countDocuments({ genre: { $exists: true, $ne: [] } })
+145
+
+# 10.5., D2
+db.moviedb.countDocuments({ type: { $exists: true, $ne: [] } })
+19
+
+# 10.5., D3
+db.moviedb.countDocuments({ $and: [{ $or: [{ genre: { $exists: false } }, { genre: [] }] }, { $or: [{ type: { $exists: false } }, { type: [] }] }] })
+78
+
+# 10.5., A1
+db.moviedb.updateMany({ type: { $exists: true } }, [{ $set: { genre: "$type" } }, { $unset: "type" }])
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 19,
+  modifiedCount: 19,
+  upsertedCount: 0
+}
+
+# 10.5., D4
+db.moviedb.countDocuments({ genre: { $exists: true } })
+164
+
+# 10.5., D5
+db.moviedb.countDocuments({ genre: { $exists: false } })
+78
+
+# 10.6., D1
+db.moviedb.distinct("genre")
+ 'Action',               'Adventure',        'Akcni',
+  'Akční',                'Ak�n�',            'Animated',
+  'Animation',            'Animovany',        'Animovaný',
+  'Biography',            'Comedy',           'Crime',
+  'Crimi',                'Criminal',         'Dimiter D. Marinov',
+
+# 10.7., D1
+db.moviedb.countDocuments({ genre: { $in: ["Historický", "Historic", "Historical", "history"] } })
+11
+
+# 10.7., A1
+db.moviedb.updateMany( { genre: { $in: ["Historický", "Historic", "Historical", "history"] } }, { $set: { "genre.$[elem]": "Historický" } }, { arrayFilters: [ { "elem": { $in: ["Historický", "Historic", "Historical", "history"] } } ] } )
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 11,
+  modifiedCount: 6,
+  upsertedCount: 0
+}
+
+# 10.7., D2
+db.moviedb.countDocuments({ genre: "Historický" })
+11
+
+# 10.8., D1
+db.moviedb.distinct("production_country")
+'032ARGAR',       'BGD',    'BHR',
+'BHS',            'BLR',    'CA',
+'CAN',            'CS',     'CZ',
+'CZE',            'Canada', 'China',
+'Czech Republic', 'DE',     'DEU',
+  
+# 10.9., D1 
+db.moviedb.countDocuments({ production_country: { $in: ["CZ", "CZE", "Czech Republic"] } })
+12
+
+# 10.9., A1
+db.moviedb.updateMany({ production_country: { $in: ["CZ", "Czech Republic"] } }, { $set: { production_country: "CZE" } })
+acknowledged: true,
+insertedId: null,
+matchedCount: 8,
+modifiedCount: 8,
+upsertedCount: 0
+ 
+# 10.9., D2
+db.moviedb.countDocuments({ production_country: "CZE" })
+12
