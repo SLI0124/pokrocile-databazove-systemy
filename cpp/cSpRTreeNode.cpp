@@ -136,6 +136,28 @@ bool cSpRTreeNode::FindInnerNode(double* v, int d, int &inCount, int& lnCount)
   //    a pro takto získaný ukazatel na potomka zavolejte metodu Find().
   // 4. Pokud Find() vrátí true, nastavte návratovou hodnotu na true 
   //    a metodu ukončete.
+
+  // 1.
+  inCount++;
+
+  // 2.
+  for (int i = 0; i < mCount; i++)
+  {
+	double* v2 = cSpRTreeItem::GetVector(GetItem(i));
+	double r = cSpRTreeItem::GetRadius(GetItem(i));
+	if (cVector::IsInSphere(v, v2, r, d))
+	{
+	  // 3.
+	  cSpRTreeNode* child = (cSpRTreeNode*)cSpRTreeItem::GetPointer(GetItem(i));
+	  // 4.
+	  if (child->Find(v, d, inCount, lnCount))
+	  {
+		return true;
+	  }
+	}
+  }
+
+  return false;
 }
 
 bool cSpRTreeNode::FindLeafNode(double* v, int d, int &lnCount)
@@ -150,6 +172,22 @@ bool cSpRTreeNode::FindLeafNode(double* v, int d, int &lnCount)
   //   - cSpRTreeItem::GetVector() - získání vektoru double* z položky uzlu
   // 3. Pokud cVector::IsInSphere() vrátí true, pak nastavte návratovou
   //    hodnotu na true a metodu ukončete.
+
+  // 1.
+  lnCount++;
+
+  // 2.
+  for (int i = 0; i < mCount; i++)
+  {
+	double* v2 = cSpRTreeItem::GetVector(GetItem(i));
+	if (cVector::IsInSphere(v, v2, cSpRTreeItem::GetRadius(GetItem(i)), d))
+	{
+	  // 3.
+	  return true;
+	}
+  }
+
+  return false;
 }
 
 /*

@@ -14,6 +14,22 @@ double cVector::EuclideanDistance(double* v1, double* v2, int dim)
   //    pro získání 2. mocniny rozdílu souřadnic.
   // 3. Počítejte součet a po ukončení cyklu odmocněte pomocí sqrt 
   //    a tuto hodnotu vraťte.
+
+  double sum = 0.0;
+  // 1.
+  for (int i = 0; i < dim; i++)
+  {
+    // 2.
+    double diff = v1[i] - v2[i];
+    // Způsob 1: použití násobení pro výkon
+    sum += diff * diff;
+    
+    // Způsob 2: použití pow funkce (pomalejší)
+    // sum += pow(diff, 2.0);
+  }
+
+  // 3.
+  return sqrt(sum);
 }
 
 bool cVector::IsInSphere(double* v, double* c, double r, int d)
@@ -22,4 +38,10 @@ bool cVector::IsInSphere(double* v, double* c, double r, int d)
   // 1. Spočítejte Euklidovskou vzdálenost mezi vektorem v a středem koule c.
   // 2. Pokud je tato vzdálenost <= poloměr koule r, pak vraťte true, 
   //    jinak vraťte false.
+
+  // 1.
+  double dist = EuclideanDistance(v, c, d);
+  
+  // 2.s
+  return dist <= r;
 }

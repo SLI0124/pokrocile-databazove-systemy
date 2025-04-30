@@ -2,6 +2,7 @@
 
 #include <string>
 #include <cstring>
+#include <cmath>
 
 class cVector
 {
