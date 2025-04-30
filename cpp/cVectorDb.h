@@ -6,7 +6,7 @@
 #include <sstream>
 #include <string>
 
-#include "cUniformRandomdouble.h"
+#include "cUniformRandomDouble.h"
 
 using namespace std;
 

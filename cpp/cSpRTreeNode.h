@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <cfloat>
 
 #include "cDynamicMemory.h"
 #include "cVector.h"
