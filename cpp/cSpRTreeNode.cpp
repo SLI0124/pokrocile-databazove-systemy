@@ -336,3 +336,55 @@ void cSpRTreeNode::ComputeRegion(cSpRTreeItem* region, int d)
 	region->SetRadius(rR);
 	region->SetPointer((char*)this);
 }
+
+int cSpRTreeNode::RangeQueryInnerNode(double* c, double r, int d, int &resultSize)
+{
+  int localResultSize = 0;
+  
+  // Průchod všemi položkami uzlu
+  for (int i = 0; i < mCount; i++)
+  {
+    double* regionCenter = cSpRTreeItem::GetVector(GetItem(i));
+    double regionRadius = cSpRTreeItem::GetRadius(GetItem(i));
+    
+    // Kontrola, zda se dotazovací koule a region protínají
+    if (cVector::AreIntersected(c, r, regionCenter, regionRadius, d))
+    {
+      // Pokud ano, získej ukazatel na potomka a rekurzivně zavolej RangeQuery
+      cSpRTreeNode* child = (cSpRTreeNode*)cSpRTreeItem::GetPointer(GetItem(i));
+      localResultSize += child->RangeQuery(c, r, d, resultSize);
+    }
+  }
+  
+  return localResultSize;
+}
+
+int cSpRTreeNode::RangeQueryLeafNode(double* c, double r, int d, int &resultSize)
+{
+  int localResultSize = 0;
+  
+  // Průchod všemi vektory v listu
+  for (int i = 0; i < mCount; i++)
+  {
+    double* vector = cSpRTreeItem::GetVector(GetItem(i));
+    
+    // Kontrola, zda je vektor uvnitř dotazovací koule
+    if (cVector::IsInSphere(vector, c, r, d))
+    {
+      localResultSize++;
+    }
+  }
+  
+  resultSize += localResultSize;
+  return localResultSize;
+}
+
+int cSpRTreeNode::RangeQuery(double* c, double r, int d, int &resultSize)
+{
+  if (mInnerNode) {
+    return RangeQueryInnerNode(c, r, d, resultSize);
+  }
+  else {
+    return RangeQueryLeafNode(c, r, d, resultSize);
+  }
+}

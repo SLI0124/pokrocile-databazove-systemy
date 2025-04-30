@@ -185,7 +185,17 @@ void cSpRTree::CreateNewRoot(cSpRTreeItem* oldRegion, cSpRTreeItem* newRegion)
 
 bool cSpRTree::Find(double* v)
 {
-	int inCount = 0, lnCount = 0;
-	bool ret = mRootNode->Find(v, mD, inCount, lnCount);
-	return ret;
+	int inCount = 0;
+	int lnCount = 0;
+	return mRootNode->Find(v, mD, inCount, lnCount);
+}
+
+int cSpRTree::RangeQuery(double* c, double r, int &resultSize)
+{
+    resultSize = 0;
+    if (mLeafItemCount == 0) {
+        return 0; // Empty tree
+    }
+    
+    return mRootNode->RangeQuery(c, r, mD, resultSize);
 }

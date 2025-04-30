@@ -30,6 +30,9 @@ private:
 
 	bool FindInnerNode(double* v, int d, int &inCount, int &lnCount);
 	bool FindLeafNode(double* v, int d, int &lnCount);
+	
+	int RangeQueryInnerNode(double* c, double r, int d, int &resultSize);
+	int RangeQueryLeafNode(double* c, double r, int d, int &resultSize);
 
 	void CopyFrom(cSpRTreeNode* node, int d);
 
@@ -47,6 +50,7 @@ public:
 	bool Insert(cSpRTreeItem *item, int d);
 
 	bool Find(double* v, int d, int &inCount, int &lnCount);
+	int RangeQuery(double* c, double r, int d, int &resultSize);
 
 	void Split(int d, cSpRTreeNode* newNode, cSpRTreeItem* regionOld, cSpRTreeItem* regionNew, cDynamicMemory* memory);
 

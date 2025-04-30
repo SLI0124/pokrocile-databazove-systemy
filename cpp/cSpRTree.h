@@ -35,4 +35,5 @@ public:
 
 	bool Insert(double *v);
 	bool Find(double* v);
+	int RangeQuery(double* c, double r, int &resultSize);
 };

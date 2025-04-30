@@ -42,6 +42,19 @@ bool cVector::IsInSphere(double* v, double* c, double r, int d)
   // 1.
   double dist = EuclideanDistance(v, c, d);
   
-  // 2.s
+  // 2.
   return dist <= r;
+}
+
+bool cVector::AreIntersected(double* c1, double r1, double* c2, double r2, int d)
+{
+  // Postup:
+  // 1. Spočítejte Euklidovskou vzdálenost mezi středy koulí c1 a c2
+  // 2. Koule se protínají, pokud je vzdálenost mezi středy <= součet poloměrů
+  
+  // 1.
+  double dist = EuclideanDistance(c1, c2, d);
+  
+  // 2.
+  return dist <= (r1 + r2);
 }
