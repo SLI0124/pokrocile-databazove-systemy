@@ -78,7 +78,7 @@ def calculate_average_prices(con):
     """).fetchall()
     print("\nPrůměrné ceny v městech:")
     for city, avg_price in result:
-        print(f"{city}: {avg_price}")
+        print(f"{city}: {'{:,}'.format(int(avg_price)).replace(',', ' ')}")
 
 def find_most_popular_models(con):
     result = con.sql("""
