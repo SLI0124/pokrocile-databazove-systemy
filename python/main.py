@@ -35,7 +35,7 @@ def join_tables(con):
             c.* EXCLUDE (car_name),
             common_word_count(u.car_name, c.car_name) AS common_words
         FROM UsedCar u
-        JOIN Car c
+        LEFT JOIN Car c
             ON common_word_count(u.car_name, c.car_name) > 2
     """)
     print("Tabulka UsedCar_joined byla úspěšně vytvořena.")
