@@ -1,0 +1,37 @@
+CREATE OR REPLACE TABLE Car AS
+FROM "~/projects/school/pokrocile-databazove-systemy/python/csv/CARS_1.csv";
+
+CREATE OR REPLACE TABLE UsedCar AS
+FROM "~/projects/school/pokrocile-databazove-systemy/python/csv/used_car_dataset.csv";
+
+FROM Car;
+
+from UsedCar;
+
+CREATE OR REPLACE TABLE UsedCar_cleaned AS
+SELECT
+    *,
+    CAST(
+        TRY_CAST(
+            REGEXP_REPLACE(car_price_in_rupees, '[^0-9.]', '', 'g')
+            AS DOUBLE
+        ) *
+        CASE
+            WHEN car_price_in_rupees ILIKE '%lakh%' THEN 100000
+            ELSE 1
+        END
+        AS BIGINT
+    ) AS price_numeric,
+    TRY_CAST(
+        REGEXP_REPLACE(kms_driven, '[^0-9]', '', 'g')
+        AS BIGINT
+    ) AS kms_numeric
+FROM UsedCar;
+
+from UsedCar_cleaned;
+
+SELECT car_price_in_rupees, kms_driven, price_numeric, kms_numeric
+FROM UsedCar_cleaned
+LIMIT 20;
+
+COPY UsedCar_cleaned TO '~/projects/school/pokrocile-databazove-systemy/python/csv/used_cars_cleaned.csv';
